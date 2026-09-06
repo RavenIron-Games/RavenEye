@@ -1,6 +1,7 @@
 # RavenEye
 
-A Valheim mod by [Raven Iron](https://github.com/RavenIron).
+A Valheim mod by [Raven Iron](https://github.com/RavenIron). Download on
+[Hexium](https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye).
 
 **The vanilla map, for admins only, on a world that has none — with every player on it.**
 
