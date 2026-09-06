@@ -1,0 +1,92 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>RavenEye</AssemblyName>
+    <RootNamespace>RavenIron.RavenEye</RootNamespace>
+    <Version>0.1.0</Version>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Company>Raven Iron</Company>
+    <Product>RavenEye</Product>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <!--
+    Shared libs folder at the repo root, populated by tools\fetch-libs.ps1.
+    Deliberately NOT a hardcoded Steam path: a second checkout lives somewhere else,
+    and a Steam library move would break every clone.
+    libs\ is gitignored - each dev runs fetch-libs once.
+  -->
+  <PropertyGroup>
+    <LibsDir>$(MSBuildThisFileDirectory)..\libs</LibsDir>
+  </PropertyGroup>
+
+  <Target Name="CheckLibs" BeforeTargets="BeforeBuild">
+    <Error Condition="!Exists('$(LibsDir)\assembly_valheim_publicized.dll')"
+           Text="libs\ is missing or empty. Run tools\fetch-libs.ps1 to populate it from your Valheim install." />
+  </Target>
+
+  <!--
+    ONE source of truth for the version: the Version property above.
+
+    BepInPlugin needs a compile-time constant, so the number has to exist in C# as well -
+    and two copies of a number drift. Generating the constant means the two can never
+    disagree, rather than being checked. (Cairn's approach; see its csproj for the history.)
+  -->
+  <Target Name="GenerateVersionConst" BeforeTargets="BeforeCompile">
+    <PropertyGroup>
+      <VersionConstFile>$(IntermediateOutputPath)BuildVersion.g.cs</VersionConstFile>
+    </PropertyGroup>
+    <WriteLinesToFile
+        File="$(VersionConstFile)"
+        Lines="// Generated from the csproj Version property. Do not edit.%0Anamespace RavenIron.RavenEye%0A{%0A    internal static class BuildVersion%0A    {%0A        public const string Value = &quot;$(Version)&quot;%3B%0A    }%0A}"
+        Overwrite="true"
+        WriteOnlyWhenDifferent="true" />
+    <ItemGroup>
+      <Compile Include="$(VersionConstFile)" />
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup>
+    <!--
+      Include names are the assemblies' real identities: the publicized files still
+      identify as assembly_valheim / assembly_utils, so naming them '..._publicized'
+      resolves through HintPath but warns on identity mismatch.
+
+      PUBLICIZED ASSEMBLIES ARE COMPILE-TIME ONLY (house style rule 5). At runtime the game
+      loads the real assembly with original accessibility. Every private member this mod
+      touches is reached through a cached AccessTools delegate - see Server\AdminGate.cs.
+    -->
+    <Reference Include="assembly_valheim">
+      <HintPath>$(LibsDir)\assembly_valheim_publicized.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- assembly_utils: SyncedList (the admin list's type) and PlatformPrefs. -->
+    <Reference Include="assembly_utils">
+      <HintPath>$(LibsDir)\assembly_utils_publicized.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine">
+      <HintPath>$(LibsDir)\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(LibsDir)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="BepInEx">
+      <HintPath>$(LibsDir)\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(LibsDir)\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
