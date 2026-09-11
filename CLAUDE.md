@@ -24,7 +24,7 @@ Design document — the reasoning, the critique panel's findings and every decis
 
 **PUBLISHED 2026-09-06: RavenEye 0.1.0 is live on Hexium under team RavenIronStudios,
 category "Client & Server" — <https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye>.
-Source: <https://github.com/RavenIron/RavenEye>, tag v0.1.0. Built, reviewed, verified and
+Source: <https://github.com/RavenIron-Games/RavenEye>, tag v0.1.0. Built, reviewed, verified and
 shipped in one day. Any re-upload, even icon-only, needs a version bump.**
 
 **Status (2026-09-06, 0.1.0): built, 143/143 off-game, eight load-bearing tests proven to
