@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.2.0
+
+Valheim 1.0. **If you updated the game, 0.1.0 was broken and this is the fix.**
+
+- **Rebuilt for Valheim 1.0.12.** Nothing about the map, the roster, the admin gate or the death
+  grace changed. The game did: 1.0.7 added a parameter to `Terminal.ConsoleCommand`'s constructor,
+  and .NET binds a call like that by its exact signature at runtime, so the `raveneye` console
+  registration in the 0.1.0 binary threw `MissingMethodException` on a 1.0.x game. Losing that
+  command matters more here than in most mods — it is the instrument that tells an admin *why*
+  the map is or is not showing, and "the map did not appear" has at least eight causes with one
+  symptom.
+- **Source link fixed.** The repository moved to the `RavenIron-Games` organisation, so the
+  "Source" link on this page pointed at a URL that no longer resolves.
+- **Why 0.1.0 looked healthy.** It compiled clean against 1.0.7 the day the update landed. A clean
+  build proves the source matches today's game — it says nothing about a DLL built weeks earlier.
+  The break was found by reading the shipped binary's own reference table and resolving each entry
+  against the live game assemblies.
+
+
 ## 0.1.0
 
 First release.
