@@ -57,7 +57,7 @@ folder.
 it is inert for anyone not on the admin list — no map, no pins, no change of any kind.
 
 Requires [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).
-Built against Valheim 0.221.12.
+Built against Valheim 1.0.12. On a game at 1.0 or newer you need 0.2.0 or later; 0.1.0 loses its `raveneye` console command there.
 
 ## Playing honestly
 

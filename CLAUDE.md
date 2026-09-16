@@ -22,10 +22,18 @@ shares no code or data with it. The test WORLD is still called VantageTest; it i
 Design document — the reasoning, the critique panel's findings and every decision:
 `docs/DESIGN.md`.
 
-**PUBLISHED 2026-09-06: RavenEye 0.1.0 is live on Hexium under team RavenIronStudios,
-category "Client & Server" — <https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye>.
-Source: <https://github.com/RavenIron-Games/RavenEye>, tag v0.1.0. Built, reviewed, verified and
-shipped in one day. Any re-upload, even icon-only, needs a version bump.**
+**PUBLISHED 2026-09-16: RavenEye 0.2.0 is live on Hexium under team RavenIronStudios,
+category "Client & Server" — <https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye>
+(verified against the store page the same day). Source:
+<https://github.com/RavenIron-Games/RavenEye>, tag v0.2.0. Any re-upload, even icon-only,
+needs a version bump.** 0.2.0 is the 0.1.0 code rebuilt for Valheim 1.0.12 — nothing in the mod
+changed. 0.1.0 (live 2026-09-06, built and shipped in one day) threw `MissingMethodException`
+on the `Terminal.ConsoleCommand` constructor on any 1.0.x game, because 1.0.7 added a parameter
+and .NET binds by exact signature at runtime; the `raveneye` command, the instrument that says
+WHY the map is or is not showing, was the casualty. It sat broken on the store from the 1.0.7
+update (2026-09-10) until 2026-09-16. A clean source build did not catch it — the shipped DLL
+had to be read (RagnaroksWrath's `tools\revprobe` over `dist\`). **After any Valheim update,
+re-check the SHIPPED binary, not only the source.**
 
 **Status (2026-09-06, 0.1.0): built, 143/143 off-game, eight load-bearing tests proven to
 fail without their fix; reviewed by a four-reviewer adversarial pass (two real defects found
@@ -148,6 +156,12 @@ command, not on a guess.
 ---
 
 ## Engine facts — Valheim 0.221.12, decompiled 2026-09-06
+
+Re-checked on Valheim 1.0.12 (2026-09-11, RagnaroksWrath's `tools\apiprobe`, every surface this
+mod reaches resolves). The one body change that touches this mod is a vanilla FIX:
+`ZNet.ListContainsId` had `flag = list.Contains(...)` corrected to `flag |=`, so an admin list
+entry in any of the three ID forms (bare, `Steam_`, `V_`) matches again — 1.0.7 alone had
+accepted only `V_<steamid>`. Everything below still holds.
 
 - `Game.m_noMap` (public static) has ONE writer (`Game.UpdateNoMap`) and ONE reader
   (`Minimap.SetMapMode`, which coerces the requested mode to None) in the whole assembly — the
