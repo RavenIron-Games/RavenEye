@@ -162,3 +162,16 @@ no map; RavenEye is for the person on duty.
 RavenEye shares a name's worth of family resemblance with The Raven's Call and nothing else:
 no code, no data, no connection between them. One shows admins where people are right now;
 the other keeps a server's chronicle.
+
+---
+
+## Support Raven Iron
+
+Every Raven Iron mod is free, and stays free — all of it, always. Nothing is held
+back for patrons, and nothing ever will be.
+
+If you'd like to help cover server hosting and test hardware:
+
+- **Patreon** — <https://www.patreon.com/cw/RavenIronGames>
+- **Discord** — <https://discord.gg/AGKDEurAVa> — a channel per mod, and where the
+  testing happens
