@@ -22,6 +22,14 @@ shares no code or data with it. The test WORLD is still called VantageTest; it i
 Design document — the reasoning, the critique panel's findings and every decision:
 `docs/DESIGN.md`.
 
+**Unreleased on main (2026-09-23): the build no longer embeds the build machine's folders.**
+Every shipped DLL through 0.2.0 carried the absolute PDB path (C:\Users\<name>\…) in its PE
+debug directory. The csproj now sets DeterministicSourcePaths and always names the repo root
+as a SourceRoot, so the DLL carries /_/…/RavenEye.pdb and neither the DLL nor the PDB names a
+local path; the IL is unchanged. At the next cut, say in the changelog that the DLL no longer
+carries an absolute build path that included the build machine's user name (quote no path),
+and name the commit the DLL was built from: the md5 follows the commit and no longer the checkout folder (the PDB's Source Link URL carries the commit).
+
 **PUBLISHED 2026-09-16: RavenEye 0.2.0 is live on Hexium under team RavenIronStudios,
 category "Client & Server" — <https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye>
 (verified against the store page the same day). Source:
