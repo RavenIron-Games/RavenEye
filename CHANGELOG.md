@@ -2,25 +2,28 @@
 
 ## 0.2.1
 
-Two fixes and a README correction. Who gets the map, the roster, the admin gate and the death
-grace work as before.
+Two fixes and a README correction, plus the housekeeping listed under "Also in this release".
+Who gets the map, the roster, the admin gate and the death grace work as before.
 
-- **No no-map achievement progress while RavenEye shows you the map.** The game decides that
+- **No no-map achievement progress while RavenEye grants you the map.** The game decides that
   you are exploring without a map from the world's no-map setting alone, and RavenEye leaves
   that setting in place. So an admin, a host or a solo player sailing to the world's edges with
   RavenEye's map up was counted toward the game's no-map exploration achievement. RavenEye now
-  tells the game that trip does not count while it is showing you the map. With RavenEye's map
-  switched off (`ShowMap = false` or `raveneye map off`), the game counts as it always did.
+  tells the game that trip does not count while RavenEye grants you the map, even if your
+  character's own `nomap` has it hidden. With RavenEye's map switched off (`ShowMap = false`
+  or `raveneye map off`), the game counts as it always did.
 - **One broken patch no longer takes the whole mod down.** If a future Valheim update moves
-  one of the game methods RavenEye hooks, only that part stops working. The map, the roster and
-  the `raveneye` console carry on, and the BepInEx log names the part that could not load.
-  Before, the whole mod stopped at start-up.
+  one of the game methods RavenEye hooks, only that part stops working and the rest carries
+  on. The BepInEx log names the part that could not load. Before, the whole mod stopped at
+  start-up.
 - **README correction: a host or solo player gets the map on their own world.** The README
   said RavenEye does nothing for a player who is not on an admin list. That is only true for a
   player who joins someone else's server. Whoever runs the world is its admin, so a player
   hosting from their own game, or alone on a single-player no-map world, gets the map with
   RavenEye installed. To keep a solo no-map run map-less, set `ShowMap = false`, type
   `raveneye map off`, or leave RavenEye out of that profile.
+
+Also in this release:
 
 - **The DLL no longer carries the build machine's folder path.** Every earlier build embedded
   the absolute path of its debug-symbols file, a path that included the build machine's user

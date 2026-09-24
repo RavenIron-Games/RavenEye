@@ -10,7 +10,9 @@ server's `adminlist.txt` get the ordinary minimap and large map back, exactly as
 draws them, and on it the ordinary player pins — name and icon — for every player online,
 whether or not those players ever chose to share their position.
 
-It does nothing for anyone else. Nothing new is drawn. Remove it and the world is exactly
+For anyone else joining a server, it does nothing. A host, or a player alone on a
+single-player world, is that world's admin and gets the map on it (see "If you host, or play
+solo" below). Nothing new is drawn. Remove it and the world is exactly
 what it was.
 
 **Early release.** Seen working on a dedicated no-map server: the map appearing for an admin,
@@ -80,9 +82,10 @@ An admin who wants to play their own no-map world the hard way sets `ShowMap = f
 the client config, or types `raveneye map off` in the console. The server keeps granting; the
 client declines. `raveneye map on` takes it back.
 
-While RavenEye is showing you the map, your trips to the world's edges do not count toward
-the game's no-map exploration achievement: you have a map. With RavenEye's map switched off
-(`ShowMap = false` or `raveneye map off`), the game counts them as it normally would.
+While RavenEye grants you the map, your trips to the world's edges do not count toward the
+game's no-map exploration achievement, even if your character's own `nomap` has the map
+hidden. With RavenEye's map switched off (`ShowMap = false` or `raveneye map off`), the game
+counts them as it normally would.
 
 ## The character's own `nomap`
 
@@ -168,7 +171,7 @@ receives nothing.
 RavenEye patches three things, all as postfixes that yield to any other mod: the game's own
 map-permission decision (`Game.UpdateNoMap`), the list of players to pin
 (`ZNet.GetOtherPublicPlayers`), and the game's check for the no-map exploration achievement
-(`Achievements.IsCleanNoMap`), which reads "no" while RavenEye is showing you the map. It does not touch `EnvMan`, map rendering or world
+(`Achievements.IsCleanNoMap`), which reads "no" while RavenEye grants you the map. It does not touch `EnvMan`, map rendering or world
 generation, so season and weather mods (Seasonality, Seasons) are unaffected. A mod that
 unlocks the map for everyone makes RavenEye's unlock redundant; the pins still work.
 
