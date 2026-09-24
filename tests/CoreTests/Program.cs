@@ -31,6 +31,7 @@ namespace RavenEye.Tests
             GraceTests();
             ExplainTests();
             DesiredNoMapTests();
+            CleanNoMapTests();
             GrantTrackerTests();
             RosterPacketTests();
             RosterMergeTests();
@@ -173,6 +174,16 @@ namespace RavenEye.Tests
             // world must want the lock back, whatever the flag was left at.
             Check(Grant.DesiredNoMap(false, true, false) && !Grant.DesiredNoMap(true, true, false),
                   "revoke on a no-map world flips desired from allowed to locked — convergence has something to converge to");
+        }
+
+        private static void CleanNoMapTests()
+        {
+            Section("Grant.CleanNoMap");
+
+            Check(Grant.CleanNoMap(true, false), "no-map world, not granted → vanilla's credit stands");
+            Check(!Grant.CleanNoMap(true, true), "no-map world, map GRANTED → no no-map credit (the achievement is permanent)");
+            Check(!Grant.CleanNoMap(false, false), "map world, not granted → never clean");
+            Check(!Grant.CleanNoMap(false, true), "map world, granted → never turned INTO clean");
         }
 
         private static void GrantTrackerTests()
