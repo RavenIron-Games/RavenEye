@@ -30,14 +30,14 @@ local path; the IL is unchanged. At the next cut, say in the changelog that the 
 carries an absolute build path that included the build machine's user name (quote no path),
 and name the commit the DLL was built from: the md5 follows the commit and no longer the checkout folder (the PDB's Source Link URL carries the commit).
 
-**0.2.1 PREPARED 2026-09-24, NOT CUT (uncommitted in the worktree _wt/RavenEye-release, branch
-release/0.2.1-prep): the path fix above, the README Support section, rebuilt against Valheim
-1.0.15 (revprobe: binds clean). Cut on the owner's word only.**
-**Same branch, 2026-09-24, local commits after the review (`_handoffs/review-RavenEye.md`):**
-a postfix on `Achievements.IsCleanNoMap` withholds the vanilla no-map achievement stats while
-the grant is active; each patch class is installed on its own (`Core/PatchInstall.cs`), with
-the tick added first; the README now says a host or solo player gets the map on their own
-world (owner's decision: fix the README, keep the behaviour). Still 0.2.1. Not yet run in game.
+**CUT 2026-09-24: `v0.2.1`.** PR #4 — the no-map achievement guard on `Achievements.IsCleanNoMap`
+(`Core/Grant.CleanNoMap`), each patch class installed on its own try/catch
+(`Core/PatchInstall.cs`), and the README correction that a host or solo player gets the map on
+their own world — merged to `22f741a` (this worktree's `origin/main`). The tested commit is
+`e189400` (PR #4's head; the merge commit's tree is byte-identical), DLL md5 `485fe614…`
+(43,008 bytes); results in `_handoffs/SOLO-BATCH-results-2026-09-24.md`. What remains: tag
+`v0.2.1`, a GitHub pre-release with the store zip, and the store upload, which is RavenIron's
+to do.
 
 **PUBLISHED 2026-09-16: RavenEye 0.2.0 is live on Hexium under team RavenIronStudios,
 category "Client & Server" — <https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye>

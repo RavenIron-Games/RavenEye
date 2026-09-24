@@ -3,7 +3,25 @@
 ## 0.2.1
 
 Two fixes and a README correction, plus the housekeeping listed under "Also in this release".
-Who gets the map, the roster, the admin gate and the death grace work as before.
+Who gets the map, the roster, the admin gate and the death grace work as before. This DLL was built
+from the commit tagged `v0.2.1`; the GitHub release names that commit and gives the DLL's md5.
+
+**Tested in game on 2026-09-24**, on a Valheim 1.0.15 dedicated server (crossplay) with one client, and
+on a local no-map world played as its host. Boot on both sides showed `patches=4`, nothing FAILED. On
+the local no-map world, played as host, the map was granted at the start — the listen-host case;
+while it was granted, a trip to the world's edge counted `ExploreWest` and never `ExploreWestNoMap`
+(the game's own stat lines): the achievement guard held. With `raveneye map off` the same trip counted
+`ExploreWestNoMap` as it always did, and `raveneye map on` granted the map again. Joining the dedicated
+server's own world, which has a map, correctly granted nothing and made no host-style correction after
+the join. `ShowMap = true` in the test profile at the end. Not tried in game: **a dead player's pin
+holding for its full three minutes**; **a second player's pin on a listen host's map** (this run saw the
+host granted as authority, not a second player joining that host); the achievement guard seen as an
+admin *client* on a dedicated no-map server rather than as the host (the server used for this run has a
+map); the guard with the character's own `nomap` hiding the map (there the credit is withheld either
+way, because the grant check does not read that setting); and a forced patch-install failure, which
+cannot be forced without changing the code (7 off-game tests cover the rule; `patches=4` with nothing
+FAILED is the regression check in game). `raveneye status` does not reach the client log, so the
+readings above rest on the screen, not on log lines. Off-game: 154 checks, 0 failed.
 
 - **No no-map achievement progress while RavenEye grants you the map.** The game decides that
   you are exploring without a map from the world's no-map setting alone, and RavenEye leaves
@@ -31,6 +49,7 @@ Also in this release:
   no local path.
 - **A "Support Raven Iron" section in the README**, with the Raven Iron website, Patreon and
   Discord links. Every Raven Iron mod is free and stays free; nothing is held back for patrons.
+- **The store page's website link now goes to the Raven Iron website.**
 - **Built against Valheim 1.0.15.**
 
 

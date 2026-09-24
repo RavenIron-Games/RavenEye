@@ -17,8 +17,9 @@ what it was.
 
 **Early release.** Seen working on a dedicated no-map server: the map appearing for an admin,
 another player's pin moving, the revoke when an admin is removed from the list, the client
-toggle. Not yet watched through: a dead player's marker holding for its three minutes, and a
-listen host (not a dedicated server) as the admin. If either misbehaves for you, `raveneye
+toggle. Also seen, hosting a no-map world alone: the map granted to the host as that world's
+authority. Not yet watched through: a dead player's marker holding for its three minutes, and a
+second player's pin on a listen host's own map. If either misbehaves for you, `raveneye
 status` and the server log are the report to send.
 
 ---
