@@ -14,8 +14,8 @@ Sibling of Cairn (this repo's template), Undertow, FireFront and Ragnarok's Wrat
 by the same house style. Ragnarok's Wrath's locked decisions forbid player-facing UI there,
 which is why this is its own mod. Naming history, all on 2026-09-06: the working name
 Heimdall collided with an existing Thunderstore mod (JJeweLin) and a design panel found it
-off-register; the panel picked Vantage; the owner then chose **RavenEye**, spelled as one word
-because that is what their logo says, and it was checked free on Hexium (searches "raven" and
+off-register; the panel picked Vantage; RavenIron then chose **RavenEye**, spelled as one word
+because that is what the logo says, and it was checked free on Hexium (searches "raven" and
 "eye"), Thunderstore and Nexus that day. It sits beside The Raven's Call on the shelf and
 shares no code or data with it. The test WORLD is still called VantageTest; it is only a world.
 
@@ -63,18 +63,18 @@ fail without their fix; reviewed by a four-reviewer adversarial pass (two real d
 and fixed — see docs/DESIGN.md "Post-review fixes"); headless verified three times on the
 CairnTest dedicated server (plugin boots on the server binary, three patches apply, the
 admin list is read at the role line, the roster cadence runs with the gate open).
-**SEEN LIVE 2026-09-06 (dedicated VantageTest server, no-map world, the owner as admin on a
+**SEEN LIVE 2026-09-06 (dedicated VantageTest server, no-map world, a tester as admin on a
 Gale client):** the vanilla minimap rendered on a no-map world with biome label and wind
 arrow; server log `roster: 1 entry (0 dead) sent to 1 admin(s)`; client log
 `admin map GRANTED — server roster 0s ago, grace 60s` with zero flag corrections (the grant
 landed before first spawn and vanilla's own UpdateNoMap call applied it via the postfix);
-`raveneye status` works. The REVOKE is verified: the owner removed their own ID from
+`raveneye status` works. The REVOKE is verified: the tester removed their own ID from
 `adminlist.txt` while online; the server logged `is no longer an admin — map revoked`, the
 client's status read `grant: no — the server revoked it 5s ago`, `Minimap mode=None`, one
 revoke received; the unreadable-list guard correctly stayed out of it (one entry remained).
 `raveneye map off` / `map on` verified too (corrections 1 and 2 of the session's 3). A second
-account (TesTylass, no admin entry) then joined from the same laptop: the owner SAW THEIR PIN
-MOVE on the admin map, and the other client showed no map. The owner declared 0.1.0 an EARLY
+account (TesTylass, no admin entry) then joined from the same laptop: the admin SAW THEIR PIN
+MOVE on the admin map, and the other client showed no map. RavenIron declared 0.1.0 an EARLY
 RELEASE on that evidence. NOT yet seen: the dead snapshot holding for three minutes, and a
 second player or a `nomap`-typing host on a listen host (the host granted as authority was seen
 2026-09-24); see "What to verify".**
@@ -103,8 +103,8 @@ the first draft of this mod reflected into a private method because a truncated 
 the public `ZNet.IsAdmin(string)` wrapper three screens further down.
 
 To test in-game: copy `RavenEye\bin\Debug\RavenEye.dll` into `<install>\BepInEx\plugins\`.
-The owner's client runs through Gale (`%APPDATA%\com.kesomannen.gale\valheim\profiles\<profile>\BepInEx\plugins\`);
-dedicated test servers live under `C:\Users\donfr\ValheimServers\` (CairnTest on port 2466 is
+The test client runs through Gale (`%APPDATA%\com.kesomannen.gale\valheim\profiles\<profile>\BepInEx\plugins\`);
+dedicated test servers live under `%USERPROFILE%\ValheimServers\` (CairnTest on port 2466 is
 the minimal one; see the RagnaroksWrath memory notes). Valheim locks the DLL while running.
 
 ---
@@ -211,7 +211,7 @@ accepted only `V_<steamid>`. Everything below still holds.
 - A single-player or self-hosted world is `IsServer()`, so the host is granted as authority. A
   world made no-map with the world-creation "No map" setting sets only the key (the
   `mapenabled_` pref is written only by the `nomap` command), so that host sees the map at
-  once. The owner's decision (2026-09-24): keep it, and say so in the README.
+  once. RavenIron's decision (2026-09-24): keep it, and say so in the README.
 - Player pins: `Minimap.UpdatePlayerPins` → `ZNet.GetOtherPublicPlayers(list)` every frame;
   rebuilds pins only when the COUNT changes, matches by INDEX, smooths only when the name
   matches. A share-toggle flip moves a player from our tail to vanilla's head (snap, not
