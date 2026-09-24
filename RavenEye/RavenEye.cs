@@ -10,7 +10,7 @@ namespace RavenIron.RavenEye
 {
     /// <summary>
     /// The entry point. Binds config, starts the tick, installs the patches one class at a
-    /// tick.
+    /// time (the three postfixes and the console).
     ///
     /// One role-aware DLL, as in the studio's other mods: a dedicated server sends the
     /// roster, an admin's client receives it and lets vanilla draw the map, a listen host
