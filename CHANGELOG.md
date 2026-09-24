@@ -25,7 +25,7 @@ grace work as before.
 - **The DLL no longer carries the build machine's folder path.** Every earlier build embedded
   the absolute path of its debug-symbols file, a path that included the build machine's user
   name. The build now maps its source folders to a neutral placeholder, so the shipped DLL names
-  no local path. The compiled code is the same.
+  no local path.
 - **A "Support Raven Iron" section in the README**, with the Raven Iron website, Patreon and
   Discord links. Every Raven Iron mod is free and stays free; nothing is held back for patrons.
 - **Built against Valheim 1.0.15.**
