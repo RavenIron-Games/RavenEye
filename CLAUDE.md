@@ -41,8 +41,9 @@ with the map off, NoMap counted); a client on a map world not granted. Not seen:
 for 180 s; a second player on a listen host; a host who typed `nomap` (item 1 below); the guard
 as an admin client on a dedicated no-map server; a forced patch failure. What remains: merge the
 cut commit to main, tag `v0.2.1` on the merge commit, build the zip from a fresh clone of that
-tag and record its md5, publish the GitHub pre-release with the zip, and the store upload, which
-is RavenIron's to do.
+tag, record its md5 and check that its DLL contains the build machine's user name 0 times (ASCII
+and UTF-16) and no `C:\Users` string, publish the GitHub pre-release with the zip, and the store
+upload, which is RavenIron's to do.
 
 **PUBLISHED 2026-09-16: RavenEye 0.2.0 is live on Hexium under team RavenIronStudios,
 category "Client & Server" — <https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye>
@@ -238,7 +239,7 @@ accepted only `V_<steamid>`. Everything below still holds.
 
 ---
 
-## What to verify in-game (items 2, 3, 5, 6 seen 2026-09-06; item 1 still open: the host was granted on 2026-09-24 but never with its own `nomap` set)
+## What to verify in-game (items 2, 3, 5, 6 seen 2026-09-06; still open: item 1 (the host was granted on 2026-09-24 but never with its own `nomap` set), item 4 (the dead pin) and item 7 (respawn with the grant))
 
 1. **LISTEN HOST FIRST.** Host a world, type `nomap` as host (this sets the world key AND the
    host's own character pref). `raveneye status` must say the grant is on as authority AND

@@ -56,9 +56,9 @@ off until `raveneye map on`; this run's world was not made that way); the platfo
 itself (the guard withholds the four `Explore…NoMap` stats; that these are what the game's
 no-map achievement counts is read from their names, not from the game's achievement data); and a
 forced patch-install failure, which cannot be forced without changing the code (7 off-game tests
-cover the rule; `patches=4` with nothing FAILED is the regression check in game). Everything
-above comes from the BepInEx and game log lines. Only the `raveneye status` replies, which do
-not reach the client log, were read on screen. Off-game: 154 checks, 0 failed.
+cover the rule; `patches=4` with nothing FAILED is the regression check in game). Every
+in-game reading in this paragraph comes from the BepInEx and game log lines; only the
+`raveneye status` replies, which do not reach the client log, were read on screen. Off-game: 154 checks, 0 failed.
 
 
 ## 0.2.0
