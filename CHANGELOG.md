@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.1
+
+Housekeeping. Nothing about the map, the roster, the admin gate or the death grace changed.
+
+- **The DLL no longer carries the build machine's folder path.** Every earlier build embedded
+  the absolute path of its debug-symbols file, a path that included the build machine's user
+  name. The build now maps its source folders to a neutral placeholder, so the shipped DLL names
+  no local path. The compiled code is the same.
+- **A "Support Raven Iron" section in the README**, with the Raven Iron website, Patreon and
+  Discord links. Every Raven Iron mod is free and stays free; nothing is held back for patrons.
+- **Built against Valheim 1.0.15.** No code change was needed; the built DLL's references to the
+  game were checked one by one against 1.0.15 and it binds clean.
+
+
 ## 0.2.0
 
 Valheim 1.0. **If you updated the game, 0.1.0 was broken and this is the fix.**

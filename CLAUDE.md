@@ -30,6 +30,10 @@ local path; the IL is unchanged. At the next cut, say in the changelog that the 
 carries an absolute build path that included the build machine's user name (quote no path),
 and name the commit the DLL was built from: the md5 follows the commit and no longer the checkout folder (the PDB's Source Link URL carries the commit).
 
+**0.2.1 PREPARED 2026-09-24, NOT CUT (uncommitted in the worktree _wt/RavenEye-release, branch
+release/0.2.1-prep): the path fix above, the README Support section, rebuilt against Valheim
+1.0.15 (revprobe: binds clean). Cut on the owner's word only.**
+
 **PUBLISHED 2026-09-16: RavenEye 0.2.0 is live on Hexium under team RavenIronStudios,
 category "Client & Server" — <https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye>
 (verified against the store page the same day). Source:
