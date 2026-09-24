@@ -59,10 +59,15 @@ namespace RavenIron.RavenEye
             // One class at a time, each in its own try/catch: `PatchAll` stops at the first
             // target that no longer resolves and takes everything after it down with it.
             _harmony = new Harmony(PluginId);
+            // The attribute check is INSIDE the per-class try: reading [HarmonyPatch] resolves
+            // the game type it names, so a class a Valheim update renamed throws right there.
             List<string> failed = PatchInstall.Each(
-                typeof(RavenEye).Assembly.GetTypes()
-                    .Where(t => t.GetCustomAttributes(typeof(HarmonyPatch), false).Length > 0),
-                t => _harmony.CreateClassProcessor(t).Patch(),
+                AccessTools.GetTypesFromAssembly(typeof(RavenEye).Assembly),
+                t =>
+                {
+                    if (t.GetCustomAttributes(typeof(HarmonyPatch), false).Length == 0) return;
+                    _harmony.CreateClassProcessor(t).Patch();
+                },
                 (t, ex) => Log.LogError(
                     $"patch {t.Name} could not be installed ({ex.GetType().Name}: {ex.Message}); " +
                     "that part of the mod is off, the rest carries on. A Valheim update probably moved its target."));
