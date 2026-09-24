@@ -1,7 +1,7 @@
 {
   "name": "RavenEye",
   "version_number": "0.2.1",
-  "website_url": "https://github.com/RavenIron-Games/RavenEye",
+  "website_url": "https://ravenirongames.com/",
   "description": "For server owners. Restores the vanilla map, to listed admins only, on no-map worlds - with every player pinned, sharing or not. Inert for non-admins joining a server; a host or solo player gets the map on their own world.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2333"
