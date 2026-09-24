@@ -33,6 +33,11 @@ and name the commit the DLL was built from: the md5 follows the commit and no lo
 **0.2.1 PREPARED 2026-09-24, NOT CUT (uncommitted in the worktree _wt/RavenEye-release, branch
 release/0.2.1-prep): the path fix above, the README Support section, rebuilt against Valheim
 1.0.15 (revprobe: binds clean). Cut on the owner's word only.**
+**Same branch, 2026-09-24, local commits after the review (`_handoffs/review-RavenEye.md`):**
+a postfix on `Achievements.IsCleanNoMap` withholds the vanilla no-map achievement stats while
+the grant is active; each patch class is installed on its own (`Core/PatchInstall.cs`), with
+the tick added first; the README now says a host or solo player gets the map on their own
+world (owner's decision: fix the README, keep the behaviour). Still 0.2.1. Not yet run in game.
 
 **PUBLISHED 2026-09-16: RavenEye 0.2.0 is live on Hexium under team RavenIronStudios,
 category "Client & Server" — <https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye>
@@ -113,6 +118,8 @@ RavenEye/
   Patches/Patch_Game_UpdateNoMap.cs           corrects vanilla's cold recomputation for a granted admin
   Patches/Patch_ZNet_GetOtherPublicPlayers.cs the pins (append to vanilla's list)
   Patches/Patch_Terminal.cs                   `raveneye status | roster | map on|off`
+  Patches/Patch_Achievements_IsCleanNoMap.cs  no no-map achievement credit while the map is granted
+  Core/PatchInstall.cs      PURE: install each patch class in its own try/catch
 tests/CoreTests/            net10 harness; compiles the REAL source against stubs
 tools/                      fetch-libs, run-tests, package
 libs/                       gitignored; populated by fetch-libs.ps1
@@ -188,6 +195,16 @@ accepted only `V_<steamid>`. Everything below still holds.
 - Two nomap-dependent gates besides the flag, both keyed on `Minimap.m_mode == None`: the
   chat ping distance (Chat.cs) and `Game.RPC_DiscoverLocationResponse` (Vegvisir turns the
   head instead of pinning). A granted admin gets the map-world behaviour of both. Intended.
+- A THIRD no-map gate, keyed on the WORLD KEY, not the flag (1.0.15): `Achievements.IsCleanNoMap()`
+  (public static) = `ZoneSystem.instance.GetGlobalKey(GlobalKeys.NoMap)`. Its only callers are
+  `Player`'s four world-edge checks (beyond ±10,350) that add `ExploreNorth/South/East/WestNoMap`,
+  the stats behind the platform no-map exploration achievement. Lifting `m_noMap` leaves the key
+  set, so `Patch_Achievements_IsCleanNoMap` returns false while the grant is active. NOT
+  intended to be relaxed: an achievement is a permanent account record.
+- A single-player or self-hosted world is `IsServer()`, so the host is granted as authority. A
+  world made no-map with the world-creation "No map" setting sets only the key (the
+  `mapenabled_` pref is written only by the `nomap` command), so that host sees the map at
+  once. The owner's decision (2026-09-24): keep it, and say so in the README.
 - Player pins: `Minimap.UpdatePlayerPins` → `ZNet.GetOtherPublicPlayers(list)` every frame;
   rebuilds pins only when the COUNT changes, matches by INDEX, smooths only when the name
   matches. A share-toggle flip moves a player from our tail to vanilla's head (snap, not
