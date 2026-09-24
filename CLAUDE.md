@@ -22,22 +22,27 @@ shares no code or data with it. The test WORLD is still called VantageTest; it i
 Design document — the reasoning, the critique panel's findings and every decision:
 `docs/DESIGN.md`.
 
-**Unreleased on main (2026-09-23): the build no longer embeds the build machine's folders.**
+**Shipped in 0.2.1: the build no longer embeds the build machine's folders.**
 Every shipped DLL through 0.2.0 carried the absolute PDB path (C:\Users\<name>\…) in its PE
 debug directory. The csproj now sets DeterministicSourcePaths and always names the repo root
 as a SourceRoot, so the DLL carries /_/…/RavenEye.pdb and neither the DLL nor the PDB names a
-local path; the IL is unchanged. At the next cut, say in the changelog that the DLL no longer
-carries an absolute build path that included the build machine's user name (quote no path),
-and name the commit the DLL was built from: the md5 follows the commit and no longer the checkout folder (the PDB's Source Link URL carries the commit).
+local path; the IL is unchanged. The md5 follows the commit, not the checkout folder (the
+PDB's Source Link URL carries the commit).
 
-**CUT 2026-09-24: `v0.2.1`.** PR #4 — the no-map achievement guard on `Achievements.IsCleanNoMap`
-(`Core/Grant.CleanNoMap`), each patch class installed on its own try/catch
-(`Core/PatchInstall.cs`), and the README correction that a host or solo player gets the map on
-their own world — merged to `22f741a` (this worktree's `origin/main`). The tested commit is
-`e189400` (PR #4's head; the merge commit's tree is byte-identical), DLL md5 `485fe614…`
-(43,008 bytes); results in `_handoffs/SOLO-BATCH-results-2026-09-24.md`. What remains: tag
-`v0.2.1`, a GitHub pre-release with the store zip, and the store upload, which is RavenIron's
-to do.
+**CUT 2026-09-24: `v0.2.1`.** PR #4 (the no-map achievement guard on
+`Achievements.IsCleanNoMap`, via `Core/Grant.CleanNoMap`; each patch class installed in its own
+try/catch, `Core/PatchInstall.cs`; the README correction that a host or solo player gets the map
+on their own world) merged to main as `22f741a`. The cut commit also points manifest
+`website_url` at https://ravenirongames.com/. Tested commit `e189400` (PR #4's head; the
+merge's tree is identical), DLL md5 `485fe614…` (43,008 bytes); results in
+`_handoffs/SOLO-BATCH-results-2026-09-24.md`. Seen: `patches=4` on both sides; the host granted
+as authority on a no-map world; the guard as host (ExploreWest counted, ExploreWestNoMap not;
+with the map off, NoMap counted); a client on a map world not granted. Not seen: the dead pin
+for 180 s; a second player on a listen host; a host who typed `nomap` (item 1 below); the guard
+as an admin client on a dedicated no-map server; a forced patch failure. What remains: merge the
+cut commit to main, tag `v0.2.1` on the merge commit, build the zip from a fresh clone of that
+tag and record its md5, publish the GitHub pre-release with the zip, and the store upload, which
+is RavenIron's to do.
 
 **PUBLISHED 2026-09-16: RavenEye 0.2.0 is live on Hexium under team RavenIronStudios,
 category "Client & Server" — <https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye>
@@ -69,8 +74,9 @@ revoke received; the unreadable-list guard correctly stayed out of it (one entry
 `raveneye map off` / `map on` verified too (corrections 1 and 2 of the session's 3). A second
 account (TesTylass, no admin entry) then joined from the same laptop: the owner SAW THEIR PIN
 MOVE on the admin map, and the other client showed no map. The owner declared 0.1.0 an EARLY
-RELEASE on that evidence. NOT yet seen: the dead snapshot holding for three minutes, and the
-listen-host case — see "What to verify"; both are stated as unverified in the README.**
+RELEASE on that evidence. NOT yet seen: the dead snapshot holding for three minutes, and a
+second player or a `nomap`-typing host on a listen host (the host granted as authority was seen
+2026-09-24); see "What to verify".**
 
 ---
 
@@ -232,7 +238,7 @@ accepted only `V_<steamid>`. Everything below still holds.
 
 ---
 
-## What to verify in-game (an admin's eyes; not yet done)
+## What to verify in-game (items 2, 3, 5, 6 seen 2026-09-06; item 1 still open: the host was granted on 2026-09-24 but never with its own `nomap` set)
 
 1. **LISTEN HOST FIRST.** Host a world, type `nomap` as host (this sets the world key AND the
    host's own character pref). `raveneye status` must say the grant is on as authority AND

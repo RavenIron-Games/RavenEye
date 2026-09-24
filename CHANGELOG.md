@@ -4,24 +4,7 @@
 
 Two fixes and a README correction, plus the housekeeping listed under "Also in this release".
 Who gets the map, the roster, the admin gate and the death grace work as before. This DLL was built
-from the commit tagged `v0.2.1`; the GitHub release names that commit and gives the DLL's md5.
-
-**Tested in game on 2026-09-24**, on a Valheim 1.0.15 dedicated server (crossplay) with one client, and
-on a local no-map world played as its host. Boot on both sides showed `patches=4`, nothing FAILED. On
-the local no-map world, played as host, the map was granted at the start — the listen-host case;
-while it was granted, a trip to the world's edge counted `ExploreWest` and never `ExploreWestNoMap`
-(the game's own stat lines): the achievement guard held. With `raveneye map off` the same trip counted
-`ExploreWestNoMap` as it always did, and `raveneye map on` granted the map again. Joining the dedicated
-server's own world, which has a map, correctly granted nothing and made no host-style correction after
-the join. `ShowMap = true` in the test profile at the end. Not tried in game: **a dead player's pin
-holding for its full three minutes**; **a second player's pin on a listen host's map** (this run saw the
-host granted as authority, not a second player joining that host); the achievement guard seen as an
-admin *client* on a dedicated no-map server rather than as the host (the server used for this run has a
-map); the guard with the character's own `nomap` hiding the map (there the credit is withheld either
-way, because the grant check does not read that setting); and a forced patch-install failure, which
-cannot be forced without changing the code (7 off-game tests cover the rule; `patches=4` with nothing
-FAILED is the regression check in game). `raveneye status` does not reach the client log, so the
-readings above rest on the screen, not on log lines. Off-game: 154 checks, 0 failed.
+from the commit tagged `v0.2.1`; the GitHub release (<https://github.com/RavenIron-Games/RavenEye/releases/tag/v0.2.1>) names that commit and gives the DLL's md5.
 
 - **No no-map achievement progress while RavenEye grants you the map.** The game decides that
   you are exploring without a map from the world's no-map setting alone, and RavenEye leaves
@@ -49,8 +32,33 @@ Also in this release:
   no local path.
 - **A "Support Raven Iron" section in the README**, with the Raven Iron website, Patreon and
   Discord links. Every Raven Iron mod is free and stays free; nothing is held back for patrons.
-- **The store page's website link now goes to the Raven Iron website.**
+- **The store page's link now goes to the Raven Iron website**; under 0.2.0 it was the Source
+  link to the GitHub repository, which stays at <https://github.com/RavenIron-Games/RavenEye>.
 - **Built against Valheim 1.0.15.**
+
+**Tested in game on 2026-09-24**, on the same code as this release (commit `e189400`; only
+documents and the store page's website link changed after it) — DLL md5
+`485fe614040d9953e2ae3e1de4950a5f`, 43,008 bytes — on a Valheim 1.0.15 dedicated server
+(crossplay) with one client, and on a local no-map world played as its host. Boot on both sides
+showed `patches=4`, nothing FAILED. On the local no-map world, played as host, the map was
+granted to the host at the start; while it was granted, a trip to the world's edge counted
+`ExploreWest` and never `ExploreWestNoMap` (the game's own stat lines): the achievement guard
+held. With `raveneye map off` the same trip counted `ExploreWestNoMap` as it always did, and
+`raveneye map on` granted the map again. Joining the dedicated server's own world, which has a
+map, correctly granted nothing and left the map as the game set it. Not tried in game: **a dead
+player's pin holding for its full three minutes**; **a second player's pin on a listen host's
+map** (this run saw the host granted as authority, not a second player joining that host); the
+achievement guard seen as an admin *client* on a dedicated no-map server rather than as the host
+(the server used for this run has a map); the guard with the character's own `nomap` hiding the
+map (there the credit is withheld either way, because the grant check does not read that
+setting); a host who made the world no-map by typing `nomap` (their own character's map is then
+off until `raveneye map on`; this run's world was not made that way); the platform achievement
+itself (the guard withholds the four `Explore…NoMap` stats; that these are what the game's
+no-map achievement counts is read from their names, not from the game's achievement data); and a
+forced patch-install failure, which cannot be forced without changing the code (7 off-game tests
+cover the rule; `patches=4` with nothing FAILED is the regression check in game). Everything
+above comes from the BepInEx and game log lines. Only the `raveneye status` replies, which do
+not reach the client log, were read on screen. Off-game: 154 checks, 0 failed.
 
 
 ## 0.2.0

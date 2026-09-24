@@ -18,9 +18,11 @@ what it was.
 **Early release.** Seen working on a dedicated no-map server: the map appearing for an admin,
 another player's pin moving, the revoke when an admin is removed from the list, the client
 toggle. Also seen, hosting a no-map world alone: the map granted to the host as that world's
-authority. Not yet watched through: a dead player's marker holding for its three minutes, and a
-second player's pin on a listen host's own map. If either misbehaves for you, `raveneye
-status` and the server log are the report to send.
+authority. Not yet watched through: a dead player's marker holding for its three minutes; a
+second player on a listen-hosted world (their pin on the host's map, or an admin joining that
+host); and a host who made the world no-map by typing `nomap`, whose own character's map stays
+off until `raveneye map on`. If any of these misbehaves for you, `raveneye status` and the
+server log are the report to send.
 
 ---
 
@@ -169,7 +171,8 @@ receives nothing.
 
 ## Compatibility
 
-RavenEye patches three things, all as postfixes that yield to any other mod: the game's own
+RavenEye patches three game decisions, all as postfixes that yield to any other mod (a fourth
+patch only registers the `raveneye` console, which is why the boot line reads `patches=4`): the game's own
 map-permission decision (`Game.UpdateNoMap`), the list of players to pin
 (`ZNet.GetOtherPublicPlayers`), and the game's check for the no-map exploration achievement
 (`Achievements.IsCleanNoMap`), which reads "no" while RavenEye grants you the map. It does not touch `EnvMan`, map rendering or world
