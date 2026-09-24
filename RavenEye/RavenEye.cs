@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using BepInEx;
 using BepInEx.Logging;
@@ -8,7 +9,7 @@ using RavenIron.RavenEye.Core;
 namespace RavenIron.RavenEye
 {
     /// <summary>
-    /// The entry point. Binds config, installs the two postfixes and the console, starts the
+    /// The entry point. Binds config, starts the tick, installs the patches one class at a
     /// tick.
     ///
     /// One role-aware DLL, as in the studio's other mods: a dedicated server sends the
@@ -50,18 +51,29 @@ namespace RavenIron.RavenEye
 
             ModConfig.Bind(base.Config);
 
-            _harmony = new Harmony(PluginId);
-            _harmony.PatchAll();
-
             // A plain MonoBehaviour driven from Update — deliberately NOT a coroutine.
+            // Added BEFORE patching, so the roster and the unlock survive a patch target
+            // that a future Valheim update removes.
             gameObject.AddComponent<RavenEyeTick>();
+
+            // One class at a time, each in its own try/catch: `PatchAll` stops at the first
+            // target that no longer resolves and takes everything after it down with it.
+            _harmony = new Harmony(PluginId);
+            List<string> failed = PatchInstall.Each(
+                typeof(RavenEye).Assembly.GetTypes()
+                    .Where(t => t.GetCustomAttributes(typeof(HarmonyPatch), false).Length > 0),
+                t => _harmony.CreateClassProcessor(t).Patch(),
+                (t, ex) => Log.LogError(
+                    $"patch {t.Name} could not be installed ({ex.GetType().Name}: {ex.Message}); " +
+                    "that part of the mod is off, the rest carries on. A Valheim update probably moved its target."));
 
             // Proof of life. A silent success and a silent no-op are indistinguishable from
             // outside the game, so this line exists before there is anything to report.
             Log.LogInfo(
                 $"{PluginName} v{PluginVersion} loaded — renderer={HasRenderer}, " +
-                $"patches={_harmony.GetPatchedMethods().Count()}, " +
-                $"role is decided when a world loads.");
+                $"patches={_harmony.GetPatchedMethods().Count()}" +
+                (failed.Count > 0 ? $" ({failed.Count} FAILED: {string.Join(", ", failed)})" : "") +
+                ", role is decided when a world loads.");
         }
 
         private void OnDestroy()

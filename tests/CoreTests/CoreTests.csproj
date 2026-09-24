@@ -23,6 +23,7 @@
       about the logic that ships, and drifts apart from it silently.
     -->
     <Compile Include="..\..\RavenEye\Core\Grant.cs" />
+    <Compile Include="..\..\RavenEye\Core\PatchInstall.cs" />
     <Compile Include="..\..\RavenEye\Core\RosterMerge.cs" />
     <Compile Include="..\..\RavenEye\Core\DeathLedger.cs" />
     <Compile Include="..\..\RavenEye\Net\RosterPacket.cs" />
