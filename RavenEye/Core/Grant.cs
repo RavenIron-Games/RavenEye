@@ -98,6 +98,18 @@ namespace RavenIron.RavenEye.Core
         {
             return granted ? personalOptOut : (worldNoMap || personalOptOut);
         }
+
+        /// <summary>
+        /// Does this play still count as "clean no-map" for vanilla's achievement stats?
+        /// Vanilla decides from the world key alone (`Achievements.IsCleanNoMap`), and the
+        /// grant lifts the lock without touching the key. While the grant is active the map
+        /// is one keypress away, so no trip counts as map-less: an achievement is a permanent
+        /// account record and cannot be taken back.
+        /// </summary>
+        public static bool CleanNoMap(bool vanillaClean, bool granted)
+        {
+            return vanillaClean && !granted;
+        }
     }
 
     /// <summary>

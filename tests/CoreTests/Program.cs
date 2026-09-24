@@ -31,10 +31,12 @@ namespace RavenEye.Tests
             GraceTests();
             ExplainTests();
             DesiredNoMapTests();
+            CleanNoMapTests();
             GrantTrackerTests();
             RosterPacketTests();
             RosterMergeTests();
             DeathLedgerTests();
+            PatchInstallTests();
 
             Console.WriteLine($"\n{_passed} passed, {_failed} failed.");
             return _failed == 0 ? 0 : 1;
@@ -173,6 +175,41 @@ namespace RavenEye.Tests
             // world must want the lock back, whatever the flag was left at.
             Check(Grant.DesiredNoMap(false, true, false) && !Grant.DesiredNoMap(true, true, false),
                   "revoke on a no-map world flips desired from allowed to locked — convergence has something to converge to");
+        }
+
+        private static void CleanNoMapTests()
+        {
+            Section("Grant.CleanNoMap");
+
+            Check(Grant.CleanNoMap(true, false), "no-map world, not granted → vanilla's credit stands");
+            Check(!Grant.CleanNoMap(true, true), "no-map world, map GRANTED → no no-map credit (the achievement is permanent)");
+            Check(!Grant.CleanNoMap(false, false), "map world, not granted → never clean");
+            Check(!Grant.CleanNoMap(false, true), "map world, granted → never turned INTO clean");
+        }
+
+        private static void PatchInstallTests()
+        {
+            Section("PatchInstall.Each");
+
+            var installed = new List<string>();
+            var reported = new List<string>();
+            var failed = PatchInstall.Each(
+                new[] { typeof(int), typeof(string), typeof(bool) },
+                t => { if (t == typeof(string)) throw new InvalidOperationException("Undefined target method"); installed.Add(t.Name); },
+                (t, ex) => reported.Add(t.Name));
+
+            Equal(2, installed.Count, "a class whose target is gone does not stop the classes after it");
+            Check(installed.Contains("Boolean"), "…the class AFTER the failing one still installs");
+            Equal(1, failed.Count, "exactly the failing class is returned");
+            Check(failed.Count == 1 && failed[0] == "String", "…by name");
+            Check(reported.Count == 1 && reported[0] == "String", "the failure is reported once, naming the class");
+
+            var none = PatchInstall.Each(new[] { typeof(int) }, t => { }, (t, ex) => { });
+            Equal(0, none.Count, "all installed → nothing failed");
+
+            var loud = PatchInstall.Each(new[] { typeof(int), typeof(bool) },
+                t => throw new Exception("x"), (t, ex) => throw new Exception("logger broke"));
+            Equal(2, loud.Count, "a throwing logger does not stop the loop either");
         }
 
         private static void GrantTrackerTests()
