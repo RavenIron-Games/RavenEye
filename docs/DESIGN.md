@@ -227,6 +227,8 @@ to the shared slot the review caught — and each broke its own tests.
   client relocked within one cadence and its status named the reason. `raveneye map off|on`
   verified in the same session. A second, non-admin account then joined and the admin saw its
   pin move on the admin map while that client showed no map — the pin path is verified live.
-  0.1.0 shipped as an early release on that evidence. Still pending: the dead snapshot holding
-  for its three minutes, and the listen-host case, which is the one most likely to be silently
-  broken by vanilla's own `mapenabled_` pref.
+  0.1.0 shipped as an early release on that evidence. Still pending (as of 2026-09-06): the dead
+  snapshot holding for its three minutes, and the listen-host case, which is the one most likely
+  to be silently broken by vanilla's own `mapenabled_` pref. (Since then: the host granted as
+  authority on its own no-map world was seen 2026-09-24; a host whose own character typed
+  `nomap`, and the dead snapshot, are still open.)

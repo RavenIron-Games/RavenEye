@@ -29,16 +29,24 @@ as a SourceRoot, so the DLL carries /_/…/RavenEye.pdb and neither the DLL nor 
 local path; the IL is unchanged. The md5 follows the commit, not the checkout folder (the
 PDB's Source Link URL carries the commit).
 
-**PREPARED 2026-09-25, NOT CUT: 0.2.2** (branch `release/0.2.2-prep`). Valheim hot-fixed
-1.0.15 → 1.0.16 on 2026-09-25 (network version 40 and the save versions unchanged). No code
-change: the source builds clean against the 1.0.16 assemblies, every patch target resolves the
-same on 1.0.15 and 1.0.16, and none of the game methods whose code changed is one this mod
-patches or calls. The Release DLL's IL matches 0.2.1's ship DLL apart from the version string
-(`ilspycmd -il` diff). The changelog also narrows the 0.2.1 line about a future update moving a
-hooked method (it overclaimed for a renamed or removed game class). NOT yet run in game on
-1.0.16. Cutting it: merge, tag `v0.2.2` on the merge commit, build the zip from a fresh clone
-of that tag, record its md5 and check its DLL for the build machine's user name and
-`C:\Users`, publish the GitHub pre-release; the store upload is RavenIron's.
+**CUT 2026-09-25: `v0.2.2`** (tag on `7ac39e5`, the head of branch `release/0.2.2-prep`, not
+on a merge commit; merge that branch to main with a merge commit, not squash or rebase, so the
+tag stays in main's history). Valheim hot-fixed 1.0.15 → 1.0.16 on 2026-09-25 (network version
+40 and the save versions unchanged). No code change: the source builds clean against the 1.0.16
+assemblies, every patch target resolves the same on 1.0.15 and 1.0.16, and none of the game
+methods whose code changed is one this mod patches or calls. The Release DLL's IL matches
+0.2.1's ship DLL apart from the version string (`ilspycmd -il` diff). The changelog also narrows
+the 0.2.1 line about a future update moving a hooked method (it overclaimed for a renamed or
+removed game class). Ship DLL built from a fresh clone of `7ac39e5` against the 1.0.16
+assemblies: md5 `95dd7aaf4ea18fcacd2fbe22b5b7e0c6` (43,008 bytes), neither the build machine's
+user name nor `C:\Users` in it. Published 2026-09-25 as the GitHub pre-release "v0.2.2 -
+updated due to 1.0.16 Patch" (<https://github.com/RavenIron-Games/RavenEye/releases/tag/v0.2.2>),
+the store zip as its asset. The store upload is RavenIron's step, pending as of 2026-09-25; once
+it is up, check the store zip's DLL against that md5 (the store rewrites manifest.json).
+Smoke-run in game on 1.0.16 on 2026-09-25 (the Storm10 dedicated server plus one Gale client, a
+world WITH a map; results in `_handoffs/1016-smoke-2026-09-25.md`): `patches=4` on both sides,
+server `gate closed — the world has a map`, no RavenEye errors. That is the inert path only: the
+no-map grant and the `IsCleanNoMap` guard were not exercised on 1.0.16.
 
 **CUT 2026-09-24: `v0.2.1`.** PR #4 (the no-map achievement guard on
 `Achievements.IsCleanNoMap`, via `Core/Grant.CleanNoMap`; each patch class installed in its own
@@ -200,7 +208,9 @@ accepted only `V_<steamid>`. Everything below still holds.
 
 Re-checked on Valheim 1.0.16 (2026-09-25): none of the game methods whose code the hotfix
 changed is one this mod patches or calls; `Achievements.IsCleanNoMap` and its four `Player`
-callers read as on 1.0.15. Not yet run in game on 1.0.16.
+callers read as on 1.0.15. Loaded in game on 1.0.16 on 2026-09-25 (a dedicated map world plus
+one client: `patches=4`, gate closed, no errors); the no-map grant and the `IsCleanNoMap` guard
+have not yet run in game on 1.0.16.
 
 - `Game.m_noMap` (public static) has ONE writer (`Game.UpdateNoMap`) and ONE reader
   (`Minimap.SetMapMode`, which coerces the requested mode to None) in the whole assembly — the
