@@ -1,9 +1,32 @@
 # Changelog
 
+## 0.2.2
+
+Valheim 1.0.16. No gameplay change: this is 0.2.1 rebuilt against the new game files. Who gets
+the map, the pins, the admin gate, the death grace and the no-map achievement guard work exactly
+as in 0.2.1. This DLL was built from the commit tagged `v0.2.2`; the GitHub release (<https://github.com/RavenIron-Games/RavenEye/releases/tag/v0.2.2>) names that commit and gives the DLL's md5.
+
+- **Built against Valheim 1.0.16.** The 2026-09-25 hotfix changed none of the game code
+  RavenEye hooks or calls, so no code change was needed. Checked against the 1.0.16 game files:
+  RavenEye builds clean against them, and every game method it hooks is found there as on
+  1.0.15. The compiled code is the same as 0.2.1's apart from the version number.
+- **No need to update the server and the admins together.** A 0.2.1 server with 0.2.2 admins,
+  or the other way round, works: both versions send and read the same roster (read from the
+  code; a mixed pair has not been tried in game).
+- **Changelog correction.** The 0.2.1 entry said that if a future Valheim update moves one of
+  the game methods RavenEye hooks, only that part stops working. That holds when a hooked method
+  is renamed or removed. It does not hold for every change: if an update renames or removes a
+  whole game class that the rest of RavenEye also uses, or a game method RavenEye calls rather
+  than hooks, more of the mod can stop working. The 0.2.1 entry below now says so.
+
+Off-game: 154 checks, 0 failed. The last in-game test was of 0.2.1's code, on Valheim 1.0.15
+(see 0.2.1 below).
+
+
 ## 0.2.1
 
 Two fixes and a README correction, plus the housekeeping listed under "Also in this release".
-Who gets the map, the roster, the admin gate and the death grace work as before. This DLL was built
+Who gets the map, the roster, the admin gate and the death grace work as before. The 0.2.1 DLL was built
 from the commit tagged `v0.2.1`; the GitHub release (<https://github.com/RavenIron-Games/RavenEye/releases/tag/v0.2.1>) names that commit and gives the DLL's md5.
 
 - **No no-map achievement progress while RavenEye grants you the map.** The game decides that
@@ -13,10 +36,12 @@ from the commit tagged `v0.2.1`; the GitHub release (<https://github.com/RavenIr
   tells the game that trip does not count while RavenEye grants you the map, even if your
   character's own `nomap` has it hidden. With RavenEye's map switched off (`ShowMap = false`
   or `raveneye map off`), the game counts as it always did.
-- **One broken patch no longer takes the whole mod down.** If a future Valheim update moves
-  one of the game methods RavenEye hooks, only that part stops working and the rest carries
-  on. The BepInEx log names the part that could not load. Before, the whole mod stopped at
-  start-up.
+- **One broken patch no longer takes the whole mod down.** If a future Valheim update renames
+  or removes one of the game methods RavenEye hooks, only that hook stops working and the rest
+  carries on. The BepInEx log names the part that could not load. Before, the whole mod stopped
+  at start-up. This does not cover every change an update can make: if one renames or removes
+  a whole game class that the rest of RavenEye also uses, or a game method RavenEye calls rather
+  than hooks, more than that one part can stop working. (Corrected in 0.2.2.)
 - **README correction: a host or solo player gets the map on their own world.** The README
   said RavenEye does nothing for a player who is not on an admin list. That is only true for a
   player who joins someone else's server. Whoever runs the world is its admin, so a player

@@ -64,7 +64,7 @@ map, no pins, no change of any kind. Hosting your own world or playing solo is d
 the next section.
 
 Requires [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).
-Built against Valheim 1.0.15. On a game at 1.0 or newer you need 0.2.0 or later; 0.1.0 loses its `raveneye` console command there.
+Built against Valheim 1.0.16. On a game at 1.0 or newer you need 0.2.0 or later; 0.1.0 loses its `raveneye` console command there.
 
 ## If you host, or play solo
 

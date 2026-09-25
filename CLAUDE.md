@@ -29,6 +29,17 @@ as a SourceRoot, so the DLL carries /_/…/RavenEye.pdb and neither the DLL nor 
 local path; the IL is unchanged. The md5 follows the commit, not the checkout folder (the
 PDB's Source Link URL carries the commit).
 
+**PREPARED 2026-09-25, NOT CUT: 0.2.2** (branch `release/0.2.2-prep`). Valheim hot-fixed
+1.0.15 → 1.0.16 on 2026-09-25 (network version 40 and the save versions unchanged). No code
+change: the source builds clean against the 1.0.16 assemblies, every patch target resolves the
+same on 1.0.15 and 1.0.16, and none of the 28 game methods whose code changed is one this mod
+patches or calls. The Release DLL's IL matches 0.2.1's ship DLL apart from the version string
+(`ilspycmd -il` diff). The changelog also narrows the 0.2.1 line about a future update moving a
+hooked method (it overclaimed for a renamed or removed game class). NOT yet run in game on
+1.0.16. Cutting it: merge, tag `v0.2.2` on the merge commit, build the zip from a fresh clone
+of that tag, record its md5 and check its DLL for the build machine's user name and
+`C:\Users`, publish the GitHub pre-release; the store upload is RavenIron's.
+
 **CUT 2026-09-24: `v0.2.1`.** PR #4 (the no-map achievement guard on
 `Achievements.IsCleanNoMap`, via `Core/Grant.CleanNoMap`; each patch class installed in its own
 try/catch, `Core/PatchInstall.cs`; the README correction that a host or solo player gets the map
@@ -39,11 +50,9 @@ merge's tree is identical), DLL md5 `485fe614…` (43,008 bytes); results in
 as authority on a no-map world; the guard as host (ExploreWest counted, ExploreWestNoMap not;
 with the map off, NoMap counted); a client on a map world not granted. Not seen: the dead pin
 for 180 s; a second player on a listen host; a host who typed `nomap` (item 1 below); the guard
-as an admin client on a dedicated no-map server; a forced patch failure. What remains: merge the
-cut commit to main, tag `v0.2.1` on the merge commit, build the zip from a fresh clone of that
-tag, record its md5 and check that its DLL contains the build machine's user name 0 times (ASCII
-and UTF-16) and no `C:\Users` string, publish the GitHub pre-release with the zip, and the store
-upload, which is RavenIron's to do.
+as an admin client on a dedicated no-map server; a forced patch failure. Merged as `1e8f93e`
+(PR #5), tagged `v0.2.1`, published as a GitHub pre-release and uploaded to Hexium on
+2026-09-24; ship DLL md5 `9da6a1c1…` (43,008 bytes), which the store's zip matched.
 
 **PUBLISHED 2026-09-16: RavenEye 0.2.0 is live on Hexium under team RavenIronStudios,
 category "Client & Server" — <https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye>
@@ -188,6 +197,10 @@ mod reaches resolves). The one body change that touches this mod is a vanilla FI
 `ZNet.ListContainsId` had `flag = list.Contains(...)` corrected to `flag |=`, so an admin list
 entry in any of the three ID forms (bare, `Steam_`, `V_`) matches again — 1.0.7 alone had
 accepted only `V_<steamid>`. Everything below still holds.
+
+Re-checked on Valheim 1.0.16 (2026-09-25): the hotfix changed the code of 28 game methods, none
+of them one this mod patches or calls; `Achievements.IsCleanNoMap` and its four `Player`
+callers read as on 1.0.15. Not yet run in game on 1.0.16.
 
 - `Game.m_noMap` (public static) has ONE writer (`Game.UpdateNoMap`) and ONE reader
   (`Minimap.SetMapMode`, which coerces the requested mode to None) in the whole assembly — the
