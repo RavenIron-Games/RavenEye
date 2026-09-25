@@ -1,10 +1,14 @@
 # Changelog
 
+## 0.2.2 — 2026-09-25
+
+Updated due to 1.0.16 Patch.
+
 ## 0.2.1
 
 Two fixes and a README correction, plus the housekeeping listed under "Also in this release".
-Who gets the map, the roster, the admin gate and the death grace work as before. This DLL was built
-from the commit tagged `v0.2.1`; the GitHub release (<https://github.com/RavenIron-Games/RavenEye/releases/tag/v0.2.1>) names that commit and gives the DLL's md5.
+Who gets the map, the roster, the admin gate and the death grace work as before. The 0.2.1 DLL
+was built from the commit tagged `v0.2.1`; the GitHub release (<https://github.com/RavenIron-Games/RavenEye/releases/tag/v0.2.1>) names that commit and gives the DLL's md5.
 
 - **No no-map achievement progress while RavenEye grants you the map.** The game decides that
   you are exploring without a map from the world's no-map setting alone, and RavenEye leaves
@@ -13,10 +17,13 @@ from the commit tagged `v0.2.1`; the GitHub release (<https://github.com/RavenIr
   tells the game that trip does not count while RavenEye grants you the map, even if your
   character's own `nomap` has it hidden. With RavenEye's map switched off (`ShowMap = false`
   or `raveneye map off`), the game counts as it always did.
-- **One broken patch no longer takes the whole mod down.** If a future Valheim update moves
-  one of the game methods RavenEye hooks, only that part stops working and the rest carries
-  on. The BepInEx log names the part that could not load. Before, the whole mod stopped at
-  start-up.
+- **One broken patch no longer takes the whole mod down.** If a future Valheim update renames
+  or removes one of the game methods RavenEye hooks, only that hook stops working and the rest
+  carries on. The BepInEx log names the part that could not load. Before, the whole mod stopped
+  at start-up. This does not cover every change an update can make: if one renames or removes
+  a whole game class that the rest of RavenEye also uses, a game method RavenEye calls rather
+  than hooks, or a game field it reads or writes, more than that one part can stop working.
+  (Corrected in 0.2.2.)
 - **README correction: a host or solo player gets the map on their own world.** The README
   said RavenEye does nothing for a player who is not on an admin list. That is only true for a
   player who joins someone else's server. Whoever runs the world is its admin, so a player

@@ -138,7 +138,7 @@ changes, one architectural.
   to house rule 1, not as a decorator: it corrects a global static after a void method.
 - **F12** corrected: two nomap-adjacent gates, not one.
 - **Name** — Heimdall → Vantage → RavenEye. Heimdall collided with an existing Thunderstore
-  mod and read as off-register for the studio; the panel picked Vantage; the owner then chose
+  mod and read as off-register for the studio; the panel picked Vantage; RavenIron then chose
   RavenEye, spelled as one word because that is what their logo says, after checks on Hexium
   (searches "raven" and "eye"), Thunderstore and Nexus found it free on 2026-09-06.
 
@@ -219,14 +219,16 @@ to the shared slot the review caught — and each broke its own tests.
   exception names the mod. (An `ArgumentNullException` from `ShieldDomeImageEffect.Awake` is
   vanilla headless noise, present without the mod.)
 - **A screen (2026-09-06, partial)**: on a fresh dedicated no-map world (`VantageTest`,
-  `-setkey nomap`) with the owner joining as admin from a Gale client, the vanilla minimap
+  `-setkey nomap`) with a tester joining as admin from a Gale client, the vanilla minimap
   rendered with biome label and wind arrow; the server logged a one-entry roster to one
   admin every cadence; the client logged the grant with zero flag corrections; `raveneye
-  status` answered. The explicit revoke then verified live: the owner removed their own ID
+  status` answered. The explicit revoke then verified live: the tester removed their own ID
   from `adminlist.txt`, the server logged the demotion within SyncedList's 10 s re-check, the
   client relocked within one cadence and its status named the reason. `raveneye map off|on`
-  verified in the same session. A second, non-admin account then joined and the owner saw its
+  verified in the same session. A second, non-admin account then joined and the admin saw its
   pin move on the admin map while that client showed no map — the pin path is verified live.
-  0.1.0 shipped as an early release on that evidence. Still pending: the dead snapshot holding
-  for its three minutes, and the listen-host case, which is the one most likely to be silently
-  broken by vanilla's own `mapenabled_` pref.
+  0.1.0 shipped as an early release on that evidence. Still pending (as of 2026-09-06): the dead
+  snapshot holding for its three minutes, and the listen-host case, which is the one most likely
+  to be silently broken by vanilla's own `mapenabled_` pref. (Since then: the host granted as
+  authority on its own no-map world was seen 2026-09-24; a host whose own character typed
+  `nomap`, and the dead snapshot, are still open.)

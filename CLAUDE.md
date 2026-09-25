@@ -14,8 +14,8 @@ Sibling of Cairn (this repo's template), Undertow, FireFront and Ragnarok's Wrat
 by the same house style. Ragnarok's Wrath's locked decisions forbid player-facing UI there,
 which is why this is its own mod. Naming history, all on 2026-09-06: the working name
 Heimdall collided with an existing Thunderstore mod (JJeweLin) and a design panel found it
-off-register; the panel picked Vantage; the owner then chose **RavenEye**, spelled as one word
-because that is what their logo says, and it was checked free on Hexium (searches "raven" and
+off-register; the panel picked Vantage; RavenIron then chose **RavenEye**, spelled as one word
+because that is what the logo says, and it was checked free on Hexium (searches "raven" and
 "eye"), Thunderstore and Nexus that day. It sits beside The Raven's Call on the shelf and
 shares no code or data with it. The test WORLD is still called VantageTest; it is only a world.
 
@@ -29,6 +29,25 @@ as a SourceRoot, so the DLL carries /_/…/RavenEye.pdb and neither the DLL nor 
 local path; the IL is unchanged. The md5 follows the commit, not the checkout folder (the
 PDB's Source Link URL carries the commit).
 
+**CUT 2026-09-25: `v0.2.2`** (tag on `7ac39e5`, the head of branch `release/0.2.2-prep`, not
+on a merge commit; merge that branch to main with a merge commit, not squash or rebase, so the
+tag stays in main's history). Valheim hot-fixed 1.0.15 → 1.0.16 on 2026-09-25 (network version
+40 and the save versions unchanged). No code change: the source builds clean against the 1.0.16
+assemblies, every patch target resolves the same on 1.0.15 and 1.0.16, and none of the game
+methods whose code changed is one this mod patches or calls. The Release DLL's IL matches
+0.2.1's ship DLL apart from the version string (`ilspycmd -il` diff). The changelog also narrows
+the 0.2.1 line about a future update moving a hooked method (it overclaimed for a renamed or
+removed game class). Ship DLL built from a fresh clone of `7ac39e5` against the 1.0.16
+assemblies: md5 `95dd7aaf4ea18fcacd2fbe22b5b7e0c6` (43,008 bytes), neither the build machine's
+user name nor `C:\Users` in it. Published 2026-09-25 as the GitHub pre-release "v0.2.2 -
+updated due to 1.0.16 Patch" (<https://github.com/RavenIron-Games/RavenEye/releases/tag/v0.2.2>),
+the store zip as its asset. The store upload is RavenIron's step, pending as of 2026-09-25; once
+it is up, check the store zip's DLL against that md5 (the store rewrites manifest.json).
+Smoke-run in game on 1.0.16 on 2026-09-25 (the Storm10 dedicated server plus one Gale client, a
+world WITH a map; results in `_handoffs/1016-smoke-2026-09-25.md`): `patches=4` on both sides,
+server `gate closed — the world has a map`, no RavenEye errors. That is the inert path only: the
+no-map grant and the `IsCleanNoMap` guard were not exercised on 1.0.16.
+
 **CUT 2026-09-24: `v0.2.1`.** PR #4 (the no-map achievement guard on
 `Achievements.IsCleanNoMap`, via `Core/Grant.CleanNoMap`; each patch class installed in its own
 try/catch, `Core/PatchInstall.cs`; the README correction that a host or solo player gets the map
@@ -39,11 +58,9 @@ merge's tree is identical), DLL md5 `485fe614…` (43,008 bytes); results in
 as authority on a no-map world; the guard as host (ExploreWest counted, ExploreWestNoMap not;
 with the map off, NoMap counted); a client on a map world not granted. Not seen: the dead pin
 for 180 s; a second player on a listen host; a host who typed `nomap` (item 1 below); the guard
-as an admin client on a dedicated no-map server; a forced patch failure. What remains: merge the
-cut commit to main, tag `v0.2.1` on the merge commit, build the zip from a fresh clone of that
-tag, record its md5 and check that its DLL contains the build machine's user name 0 times (ASCII
-and UTF-16) and no `C:\Users` string, publish the GitHub pre-release with the zip, and the store
-upload, which is RavenIron's to do.
+as an admin client on a dedicated no-map server; a forced patch failure. Merged as `1e8f93e`
+(PR #5), tagged `v0.2.1`, published as a GitHub pre-release and uploaded to Hexium on
+2026-09-24; ship DLL md5 `9da6a1c1…` (43,008 bytes), which the store's zip matched.
 
 **PUBLISHED 2026-09-16: RavenEye 0.2.0 is live on Hexium under team RavenIronStudios,
 category "Client & Server" — <https://valheim.hexium.gg/mods/RavenIronStudios/RavenEye>
@@ -63,18 +80,18 @@ fail without their fix; reviewed by a four-reviewer adversarial pass (two real d
 and fixed — see docs/DESIGN.md "Post-review fixes"); headless verified three times on the
 CairnTest dedicated server (plugin boots on the server binary, three patches apply, the
 admin list is read at the role line, the roster cadence runs with the gate open).
-**SEEN LIVE 2026-09-06 (dedicated VantageTest server, no-map world, the owner as admin on a
+**SEEN LIVE 2026-09-06 (dedicated VantageTest server, no-map world, a tester as admin on a
 Gale client):** the vanilla minimap rendered on a no-map world with biome label and wind
 arrow; server log `roster: 1 entry (0 dead) sent to 1 admin(s)`; client log
 `admin map GRANTED — server roster 0s ago, grace 60s` with zero flag corrections (the grant
 landed before first spawn and vanilla's own UpdateNoMap call applied it via the postfix);
-`raveneye status` works. The REVOKE is verified: the owner removed their own ID from
+`raveneye status` works. The REVOKE is verified: the tester removed their own ID from
 `adminlist.txt` while online; the server logged `is no longer an admin — map revoked`, the
 client's status read `grant: no — the server revoked it 5s ago`, `Minimap mode=None`, one
 revoke received; the unreadable-list guard correctly stayed out of it (one entry remained).
 `raveneye map off` / `map on` verified too (corrections 1 and 2 of the session's 3). A second
-account (TesTylass, no admin entry) then joined from the same laptop: the owner SAW THEIR PIN
-MOVE on the admin map, and the other client showed no map. The owner declared 0.1.0 an EARLY
+account (TesTylass, no admin entry) then joined from the same laptop: the admin SAW THEIR PIN
+MOVE on the admin map, and the other client showed no map. RavenIron declared 0.1.0 an EARLY
 RELEASE on that evidence. NOT yet seen: the dead snapshot holding for three minutes, and a
 second player or a `nomap`-typing host on a listen host (the host granted as authority was seen
 2026-09-24); see "What to verify".**
@@ -103,8 +120,8 @@ the first draft of this mod reflected into a private method because a truncated 
 the public `ZNet.IsAdmin(string)` wrapper three screens further down.
 
 To test in-game: copy `RavenEye\bin\Debug\RavenEye.dll` into `<install>\BepInEx\plugins\`.
-The owner's client runs through Gale (`%APPDATA%\com.kesomannen.gale\valheim\profiles\<profile>\BepInEx\plugins\`);
-dedicated test servers live under `C:\Users\donfr\ValheimServers\` (CairnTest on port 2466 is
+The test client runs through Gale (`%APPDATA%\com.kesomannen.gale\valheim\profiles\<profile>\BepInEx\plugins\`);
+dedicated test servers live under `%USERPROFILE%\ValheimServers\` (CairnTest on port 2466 is
 the minimal one; see the RagnaroksWrath memory notes). Valheim locks the DLL while running.
 
 ---
@@ -189,6 +206,12 @@ mod reaches resolves). The one body change that touches this mod is a vanilla FI
 entry in any of the three ID forms (bare, `Steam_`, `V_`) matches again — 1.0.7 alone had
 accepted only `V_<steamid>`. Everything below still holds.
 
+Re-checked on Valheim 1.0.16 (2026-09-25): none of the game methods whose code the hotfix
+changed is one this mod patches or calls; `Achievements.IsCleanNoMap` and its four `Player`
+callers read as on 1.0.15. Loaded in game on 1.0.16 on 2026-09-25 (a dedicated map world plus
+one client: `patches=4`, gate closed, no errors); the no-map grant and the `IsCleanNoMap` guard
+have not yet run in game on 1.0.16.
+
 - `Game.m_noMap` (public static) has ONE writer (`Game.UpdateNoMap`) and ONE reader
   (`Minimap.SetMapMode`, which coerces the requested mode to None) in the whole assembly — the
   critique re-verified this over a full 602-type decompile. `Minimap.Update` calls
@@ -211,7 +234,7 @@ accepted only `V_<steamid>`. Everything below still holds.
 - A single-player or self-hosted world is `IsServer()`, so the host is granted as authority. A
   world made no-map with the world-creation "No map" setting sets only the key (the
   `mapenabled_` pref is written only by the `nomap` command), so that host sees the map at
-  once. The owner's decision (2026-09-24): keep it, and say so in the README.
+  once. RavenIron's decision (2026-09-24): keep it, and say so in the README.
 - Player pins: `Minimap.UpdatePlayerPins` → `ZNet.GetOtherPublicPlayers(list)` every frame;
   rebuilds pins only when the COUNT changes, matches by INDEX, smooths only when the name
   matches. A share-toggle flip moves a player from our tail to vanilla's head (snap, not

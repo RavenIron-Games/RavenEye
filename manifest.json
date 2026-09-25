@@ -1,6 +1,6 @@
 {
   "name": "RavenEye",
-  "version_number": "0.2.1",
+  "version_number": "0.2.2",
   "website_url": "https://ravenirongames.com/",
   "description": "For server owners. Restores the vanilla map, to listed admins only, on no-map worlds - with every player pinned, sharing or not. Inert for non-admins joining a server; a host or solo player gets the map on their own world.",
   "dependencies": [
