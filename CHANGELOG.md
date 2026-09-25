@@ -1,30 +1,8 @@
 # Changelog
 
-## 0.2.2
+## 0.2.2 — 2026-09-25
 
-Valheim 1.0.16. No gameplay change: this is 0.2.1 rebuilt against the new game files. Who gets
-the map, the pins, the admin gate, the death grace and the no-map achievement guard work exactly
-as in 0.2.1. This DLL was built from the commit tagged `v0.2.2`; the GitHub release (<https://github.com/RavenIron-Games/RavenEye/releases/tag/v0.2.2>) names that commit and gives the DLL's md5.
-
-- **Built against Valheim 1.0.16.** The 2026-09-25 hotfix changed none of the game code
-  RavenEye hooks or calls, so no code change was needed. Checked against the 1.0.16 game files:
-  RavenEye builds clean against them, and every game method it hooks is found there as on
-  1.0.15. The compiled code is the same as 0.2.1's apart from the version number. 0.2.1 relies
-  on the same game code, so it behaves the same on 1.0.16 (read from that check, not tried in
-  game).
-- **No need to update the server and the admins together.** A 0.2.1 server with 0.2.2 admins,
-  or the other way round, works: both versions send and read the same roster (read from the
-  code; a mixed pair has not been tried in game).
-- **Changelog correction.** The 0.2.1 entry said that if a future Valheim update moves one of
-  the game methods RavenEye hooks, only that part stops working. That holds when a hooked method
-  is renamed or removed. It does not hold for every change: if an update renames or removes a
-  whole game class that the rest of RavenEye also uses, a game method RavenEye calls rather than
-  hooks, or a game field it reads or writes (such as `Game.m_noMap`, the map lock), more of the
-  mod can stop working. The 0.2.1 entry below now says so.
-
-Off-game: 154 checks, 0 failed. The last in-game test was of 0.2.1's code, on Valheim 1.0.15
-(see 0.2.1 below).
-
+Updated due to 1.0.16 Patch.
 
 ## 0.2.1
 
