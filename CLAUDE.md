@@ -32,7 +32,7 @@ PDB's Source Link URL carries the commit).
 **PREPARED 2026-09-25, NOT CUT: 0.2.2** (branch `release/0.2.2-prep`). Valheim hot-fixed
 1.0.15 → 1.0.16 on 2026-09-25 (network version 40 and the save versions unchanged). No code
 change: the source builds clean against the 1.0.16 assemblies, every patch target resolves the
-same on 1.0.15 and 1.0.16, and none of the 28 game methods whose code changed is one this mod
+same on 1.0.15 and 1.0.16, and none of the game methods whose code changed is one this mod
 patches or calls. The Release DLL's IL matches 0.2.1's ship DLL apart from the version string
 (`ilspycmd -il` diff). The changelog also narrows the 0.2.1 line about a future update moving a
 hooked method (it overclaimed for a renamed or removed game class). NOT yet run in game on
@@ -198,8 +198,8 @@ mod reaches resolves). The one body change that touches this mod is a vanilla FI
 entry in any of the three ID forms (bare, `Steam_`, `V_`) matches again — 1.0.7 alone had
 accepted only `V_<steamid>`. Everything below still holds.
 
-Re-checked on Valheim 1.0.16 (2026-09-25): the hotfix changed the code of 28 game methods, none
-of them one this mod patches or calls; `Achievements.IsCleanNoMap` and its four `Player`
+Re-checked on Valheim 1.0.16 (2026-09-25): none of the game methods whose code the hotfix
+changed is one this mod patches or calls; `Achievements.IsCleanNoMap` and its four `Player`
 callers read as on 1.0.15. Not yet run in game on 1.0.16.
 
 - `Game.m_noMap` (public static) has ONE writer (`Game.UpdateNoMap`) and ONE reader
